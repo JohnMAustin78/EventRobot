@@ -1,5 +1,6 @@
 package com.microsoft.office.EventRobot;
 
+import android.app.SearchManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,10 +11,13 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
+import org.w3c.dom.Text;
+
 
 public class EventActivity extends AppCompatActivity implements ICallback {
     IEventProvider eventProvider;
     TextView eventDetail;
+    TextView queryTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +26,12 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         eventDetail = (TextView)findViewById(R.id.textView);
-
-        eventProvider = new MockEventManager();
+        queryTextView = (TextView)findViewById(R.id.queryTextView);
+        if(getIntent().hasExtra(SearchManager.QUERY)){
+            queryTextView.setText(getIntent().getStringExtra(SearchManager.QUERY));
+            eventProvider = new MockEventManager();
+            eventProvider.getNextEvent(this);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -34,8 +42,6 @@ public class EventActivity extends AppCompatActivity implements ICallback {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        eventProvider.getNextEvent(this);
     }
 
     @Override

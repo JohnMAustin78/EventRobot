@@ -13,10 +13,10 @@
         <activity
             android:name="com.microsoft.office.EventRobot.ConnectActivity"
             android:label="@string/app_name"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -31,6 +31,8 @@
                 android:value="com.microsoft.office.EventRobot.MainActivity" />
             <intent-filter>
                 <action android:name="android.action.ACTION_VIEW" />
+                <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.VOICE" />
             </intent-filter>

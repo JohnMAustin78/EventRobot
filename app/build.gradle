@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.microsoft.office.calendarbotclient"
+        applicationId "com.microsoft.office.EventRobot"
         minSdkVersion 23
         targetSdkVersion 24
         versionCode 1
