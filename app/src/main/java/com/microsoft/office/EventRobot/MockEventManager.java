@@ -7,13 +7,13 @@ import com.google.gson.JsonParser;
  * Created by ricardol on 7/25/2016.
  */
 public class MockEventManager implements IEventProvider {
-    public JsonObject getNextEvent(ICallback callback) {
+    public void getNextEvent(ICallback callback) {
         String fakeEvent = "{\n" +
                 "  \"attendees\": [{\"@odata.type\": \"microsoft.graph.attendee\"}],\n" +
                 "  \"body\": {\"@odata.type\": \"microsoft.graph.itemBody\"},\n" +
-                "  \"bodyPreview\": \"string\",\n" +
-                "  \"categories\": [\"string\"],\n" +
-                "  \"changeKey\": \"string\",\n" +
+                "  \"bodyPreview\": \"The preview of the body\",\n" +
+                "  \"categories\": [\"A category\"],\n" +
+                "  \"changeKey\": \"Change key\",\n" +
                 "  \"createdDateTime\": \"String (timestamp)\",\n" +
                 "  \"end\": {\"@odata.type\": \"microsoft.graph.dateTimeTimeZone\"},\n" +
                 "  \"hasAttachments\": true,\n" +
@@ -49,6 +49,7 @@ public class MockEventManager implements IEventProvider {
                 "}";
 
         JsonParser parser = new JsonParser();
-        return (JsonObject)parser.parse(fakeEvent);
+
+        callback.onSuccess((JsonObject)parser.parse(fakeEvent));
     }
 }
