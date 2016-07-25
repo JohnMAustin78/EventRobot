@@ -26,11 +26,11 @@
         <activity
             android:name=".EventActivity"
             android:label="@string/title_activity_voice"
-            android:parentActivityName="com.microsoft.office.EventRobot.MainActivity"
+            android:parentActivityName="com.microsoft.office.EventRobot.ConnectActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.microsoft.office.EventRobot.MainActivity" />
+                android:value="com.microsoft.office.EventRobot.ConnectActivity" />
             <intent-filter>
                 <action android:name="android.action.ACTION_VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
