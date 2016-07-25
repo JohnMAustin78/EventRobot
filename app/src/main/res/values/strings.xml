@@ -2,4 +2,26 @@
     <string name="app_name">EventRobot</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_voice">Get Event By Voice</string>
+    <string name="connect_button_text">Connect to Office 365</string>
+    <string name="disconnect_menu_item_text">Disconnect</string>
+    <string name="title_text">Hi\u00A0</string>
+    <string name="description_text">\nYou\'re now connected to Office 365. Tap the mail icon below to send a message from your account using the Microsoft Graph API.\n</string>
+
+    <!-- Toast successful messages -->
+    <string name="connect_toast_text">Connected to Office 365</string>
+    <string name="discover_toast_text">Found Office 365 mail service</string>
+    <string name="disconnect_toast_text">Disconnected from Office 365</string>
+
+    <!-- TextView Error messages -->
+    <string name="title_text_error">Oops!</string>
+    <string name="connect_text_error">\nSorry, can\'t connect to Office 365.\nHint: Check logcat for details.</string>
+    <string name="discover_text_error">\nSorry, can\'t find the mail service.\nHint: Check logcat for details.</string>
+
+    <!-- Toast error messages -->
+    <string name="connect_toast_text_error">Error connecting to Office 365\nCheck logcat for details</string>
+    <string name="discover_toast_text_error">Error finding mail service\nCheck logcat for details</string>
+
+    <string name="warning_clientid_redirecturi_incorrect">The client ID or redirect URI is not valid. Enter a valid client ID and redirect URI in the Constants.java file and run again</string>
+
+
 </resources>

@@ -11,7 +11,7 @@
 
         <uses-permission android:name="android.permission.READ_CALENDAR"/>
         <activity
-            android:name="com.microsoft.office.EventRobot.MainActivity"
+            android:name="com.microsoft.office.EventRobot.ConnectActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.microsoft.office.EventRobot.VoiceActivity"
+            android:name=".EventActivity"
             android:label="@string/title_activity_voice"
             android:parentActivityName="com.microsoft.office.EventRobot.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
