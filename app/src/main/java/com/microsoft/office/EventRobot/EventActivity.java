@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
-public class VoiceActivity extends AppCompatActivity implements ICallback {
+
+public class EventActivity extends AppCompatActivity implements ICallback {
     IEventProvider eventProvider;
     TextView eventDetail;
 
