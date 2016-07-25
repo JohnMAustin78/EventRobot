@@ -1,5 +1,8 @@
 package com.microsoft.office.EventRobot;
 
+import android.widget.TextView;
+
+import android.app.SearchManager;
 import android.app.assist.AssistContent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
+import org.w3c.dom.Text;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,6 +22,7 @@ import org.json.JSONObject;
 public class EventActivity extends AppCompatActivity implements ICallback {
     IEventProvider eventProvider;
     TextView eventDetail;
+    TextView queryTextView;
     // arguments for this activity
     public static final String ARG_GIVEN_NAME = "givenName";
     public static final String ARG_DISPLAY_ID = "displayableId";
@@ -29,13 +34,15 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         eventDetail = (TextView)findViewById(R.id.textView);
-
-        eventProvider = new MockEventManager();
+        queryTextView = (TextView)findViewById(R.id.queryTextView);
+        if(getIntent().hasExtra(SearchManager.QUERY)){
+            queryTextView.setText(getIntent().getStringExtra(SearchManager.QUERY));
+            eventProvider = new MockEventManager();
+            eventProvider.getNextEvent(this);
+        }
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        eventProvider.getNextEvent(this);
     }
 
     @Override
