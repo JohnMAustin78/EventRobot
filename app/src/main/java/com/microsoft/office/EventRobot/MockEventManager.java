@@ -3,6 +3,8 @@ package com.microsoft.office.EventRobot;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.json.JSONObject;
+
 /**
  * Created by ricardol on 7/25/2016.
  */
@@ -51,5 +53,50 @@ public class MockEventManager implements IEventProvider {
         JsonParser parser = new JsonParser();
 
         callback.onSuccess((JsonObject)parser.parse(fakeEvent));
+    }
+    public String convertToAssistContent(JsonObject microsoftEvent){
+
+
+
+        String structuredJson = new JSONObject().toString();
+        Object thing = microsoftEvent.get("organizer");
+        String organizerName = null;
+        if (thing.getClass().equals(JsonObject.class)) {
+            organizerName = microsoftEvent
+                    .getAsJsonObject("organizer")
+                    .getAsJsonObject("emailAddress")
+                    .getAsJsonObject("name")
+                    .getAsString();
+        }
+
+
+        return             structuredJson = "{\n" +
+                    "  \"@context\": \"http://schema.org\",\n" +
+                    "  \"@type\": \"EventReservation\",\n" +
+                    "  \"reservationNumber\":\"E123456789\",\n" +
+                    "  \"reservationStatus\": \"http://schema.org/Confirmed\",\n" +
+                    "  \"underName\": {\n" +
+                    "    \"@type\": \"Person\",\n" +
+                    "    \"name\":"+organizerName+"\n" +
+                    "  },\n" +
+                    "  \"reservationFor\": {\n" +
+                    "    \"@type\": \"Event\",\n" +
+                    "    \"name\": \"Foo Fighters Concert\",\n" +
+                    "    \"startDate\": \"2017-03-06T19:30:00-08:00\",\n" +
+                    "    \"location\": {\n" +
+                    "      \"@type\": \"Place\",\n" +
+                    "      \"name\": \"AT&T Park\",\n" +
+                    "      \"address\": {\n" +
+                    "        \"@type\": \"PostalAddress\",\n" +
+                    "        \"streetAddress\": \"24 Willie Mays Plaza\",\n" +
+                    "        \"addressLocality\": \"San Francisco\",\n" +
+                    "        \"addressRegion\": \"CA\",\n" +
+                    "        \"postalCode\": \"94107\",\n" +
+                    "        \"addressCountry\": \"US\"\n" +
+                    "      }\n" +
+                    "    }\n" +
+                    "  }\n" +
+                    "}";
+
     }
 }
