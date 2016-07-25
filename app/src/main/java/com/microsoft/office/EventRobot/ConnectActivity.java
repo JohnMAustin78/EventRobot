@@ -4,9 +4,9 @@
  */
 package com.microsoft.office.EventRobot;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.microsoft.aad.adal.AuthenticationCallback;
 import com.microsoft.aad.adal.AuthenticationCancelError;
-import com.microsoft.aad.adal.AuthenticationException;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.UserInfo;
 
@@ -30,7 +29,7 @@ import java.util.UUID;
  * If there are cached tokens, the app tries to reuse them.
  * The activity redirects the user to the SendMailActivity upon successful connection.
  */
-public class ConnectActivity extends AppCompatActivity {
+public class ConnectActivity extends Activity {
 
     private static final String TAG = "ConnectActivity";
 
@@ -88,7 +87,15 @@ public class ConnectActivity extends AppCompatActivity {
                         // get the user's displayable Id
                         String displayableId = user.getDisplayableId();
 
+                        Intent eventActivity =
+                                new Intent(ConnectActivity.this, EventActivity.class);
 
+                        // take the user's info along
+                        eventActivity.putExtra(EventActivity.ARG_GIVEN_NAME, givenName);
+                        eventActivity.putExtra(EventActivity.ARG_DISPLAY_ID, displayableId);
+
+                        // actually start the Activity
+                        startActivity(eventActivity);
 
                         resetUIForConnect();
                     }
