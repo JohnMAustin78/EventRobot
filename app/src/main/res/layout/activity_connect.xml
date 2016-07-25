@@ -17,20 +17,24 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:visibility="gone" />
+        <TextView
+            android:layout_width="381dp"
+            android:layout_height="wrap_content"
+            android:text="@string/microsoft_event_robot"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="8sp" />
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main"
         android:id="@+id/include" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/emailButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
 
 
 </android.support.design.widget.CoordinatorLayout>

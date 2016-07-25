@@ -18,4 +18,5 @@
     <string name="connect_text_error">\nSorry, can\'t connect to Office 365.\nHint: Check logcat for details.</string>
     <string name="discover_text_error">\nSorry, can\'t find the mail service.\nHint: Check logcat for details.</string>
     <string name="sendmail_text_error">\nSorry, can\'t send the email.\nHint: Check logcat for details.</string>
+    <string name="microsoft_event_robot">Microsoft Event Robot</string>
 </resources>
