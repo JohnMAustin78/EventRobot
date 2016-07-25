@@ -1,6 +1,8 @@
 package com.microsoft.office.EventRobot;
 
+import android.app.IntentService;
 import android.app.assist.AssistContent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent voiceActivityIntent = new Intent(MainActivity.this, EventActivity.class);
+                MainActivity.this.startActivity(voiceActivityIntent);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
