@@ -5,12 +5,16 @@ import android.app.assist.AssistContent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -24,8 +28,6 @@ import static com.microsoft.office.EventRobot.R.id.startDateTextView2;
 import static com.microsoft.office.EventRobot.R.id.stateTextView;
 import static com.microsoft.office.EventRobot.R.id.statusTextView2;
 import static com.microsoft.office.EventRobot.R.id.streetTextView;
-
-
 
 public class EventActivity extends AppCompatActivity implements ICallback {
     IEventProvider eventProvider;
@@ -65,7 +67,6 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     @InjectView(postalCodeTextView)
     TextView mPostalCode;
 
-    TextView mqueryTextView;
     // arguments for this activity
     public static final String ARG_GIVEN_NAME = "givenName";
     public static final String ARG_DISPLAY_ID = "displayableId";
@@ -82,7 +83,12 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         ButterKnife.inject(this);
 
         if(getIntent().hasExtra(SearchManager.QUERY)){
-            eventProvider = new MockEventManager();
+            Toast.makeText(
+                    EventActivity.this,
+                    "Search query: " + getIntent().getStringExtra(SearchManager.QUERY),
+                    Toast.LENGTH_LONG).show();
+            eventProvider = new EventManager(this.getApplicationContext());
+
             eventProvider.getNextEvent(this);
 
         }
@@ -165,12 +171,66 @@ public class EventActivity extends AppCompatActivity implements ICallback {
 
     @Override
     public void onFailure(Exception e) {
-
+        Log.e("EventRobot", e.getMessage());
     }
     @Override
     public void onProvideAssistContent(AssistContent assistContent) {
 
         String structuredJson = null;
+        try {
+            String attendeeJson = new JSONObject()
+                    .put("@context","http://schema.org")
+                    .put("@type","person")
+                    .put("familyName","Loo")
+                    .put("givenName","Ricardo").toString();
+            String postalAddressJson = new JSONObject()
+                    .put("@context","http://schema.org")
+                    .put("@type","postalAddress")
+                    .put("postalCode","98466")
+                    .put("streetAddress","9726 Vision court")
+                    .put("addressLocality","Garden Grove")
+                    .put("addressRegion","CA").toString();
+
+            structuredJson = new JSONObject()
+                    .put("@context","http://schema.org")
+                    .put("@type","event")
+                    .put("attendee", attendeeJson)
+                    .put("location", postalAddressJson)
+                    .put("startDate", "2017-03-06T19:30:00-08:00")
+                    .toString();
+
+//            structuredJson = "{\n" +
+//                    "  \"@context\": \"http://schema.org\",\n" +
+//                    "  \"@type\": \"EventReservation\",\n" +
+//                    "  \"reservationNumber\": \"E123456789\",\n" +
+//                    "  \"reservationStatus\": \"http://schema.org/Confirmed\",\n" +
+//                    "  \"underName\": {\n" +
+//                    "    \"@type\": \"Person\",\n" +
+//                    "    \"name\": \"John Smith\"\n" +
+//                    "  },\n" +
+//                    "  \"reservationFor\": {\n" +
+//                    "    \"@type\": \"Event\",\n" +
+//                    "    \"name\": \"Foo Fighters Concert\",\n" +
+//                    "    \"startDate\": \"2017-03-06T19:30:00-08:00\",\n" +
+//                    "    \"location\": {\n" +
+//                    "      \"@type\": \"Place\",\n" +
+//                    "      \"name\": \"AT&T Park\",\n" +
+//                    "      \"address\": {\n" +
+//                    "        \"@type\": \"PostalAddress\",\n" +
+//                    "        \"streetAddress\": \"24 Willie Mays Plaza\",\n" +
+//                    "        \"addressLocality\": \"San Francisco\",\n" +
+//                    "        \"addressRegion\": \"CA\",\n" +
+//                    "        \"postalCode\": \"94107\",\n" +
+//                    "        \"addressCountry\": \"US\"\n" +
+//                    "      }\n" +
+//                    "    }\n" +
+//                    "  }\n" +
+//                    "}";
+
+            Log.i("Json", structuredJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         if (mMicrosoftEvent != null) {
             structuredJson = eventProvider.convertToAssistContent(mMicrosoftEvent);
