@@ -5,14 +5,14 @@ import android.util.Log;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Created by ricardol on 7/25/2016.
  */
 public class MockEventManager implements IEventProvider {
 
-    private Map<String,String> mEventValues;
+    private HashMap<String,String> mEventValues;
     public void getNextEvent(ICallback callback) {
         String fakeEvent = "{\n" +
                 "            \"@odata.etag\": \"W/\\\"K7T5f6aJskSLQawF2628UAAAE2Tftg==\\\"\",\n" +
@@ -193,7 +193,22 @@ public class MockEventManager implements IEventProvider {
     }
 
     @Override
-    public Map<String, String> getEventValues() {
+    public HashMap<String, String> getEventValues() {
+        EventConstants eventConstants = new EventConstants();
+        if (mEventValues == null){
+            mEventValues = new HashMap<String, String>();
+            mEventValues.put(eventConstants.EVENT_RESERVATION_NUMBER,"123");
+            mEventValues.put(eventConstants.EVENT_RESERVATION_STATUS,"Confirmed");
+            mEventValues.put(eventConstants.EVENT_SUBJECT,"Discuss vacation");
+            mEventValues.put(eventConstants.EVENT_DETAIL,"Vacation plans for the group");
+            mEventValues.put(eventConstants.EVENT_UNDER_NAME,"John Austin");
+            mEventValues.put(eventConstants.EVENT_START_DATE,"2014-01-01T00:00:00Z");
+            mEventValues.put(eventConstants.EVENT_LOCATION_NAME,"Seattle Center");
+            mEventValues.put(eventConstants.EVENT_LOCATION_STREET,"1234 Easy Street");
+            mEventValues.put(eventConstants.EVENT_LOCATION_CITY,"Seattle");
+            mEventValues.put(eventConstants.EVENT_LOCATION_STATE,"Wa");
+            mEventValues.put(eventConstants.EVENT_LOCATION_POSTAL_CODE,"98433");
+        }
         return mEventValues;
     }
 }

@@ -2,7 +2,7 @@ package com.microsoft.office.EventRobot;
 
 import com.google.gson.JsonObject;
 
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Created by ricardol on 7/25/2016.
@@ -10,5 +10,5 @@ import java.util.Map;
 public interface IEventProvider {
     void getNextEvent(ICallback callback);
     String convertToAssistContent(JsonObject microsoftEvent);
-    Map<String,String> getEventValues();
+    HashMap<String,String> getEventValues();
 }

@@ -24,7 +24,6 @@ import static com.microsoft.office.EventRobot.R.id.startDateTextView2;
 import static com.microsoft.office.EventRobot.R.id.stateTextView;
 import static com.microsoft.office.EventRobot.R.id.statusTextView2;
 import static com.microsoft.office.EventRobot.R.id.streetTextView;
-import static com.microsoft.office.EventRobot.R.id.subjectTextView;
 
 
 
@@ -34,11 +33,10 @@ public class EventActivity extends AppCompatActivity implements ICallback {
 
 
 
-    @InjectView(subjectTextView)
-    TextView mEventName;
 
     @InjectView(SubjectText)
-    TextView mSubjectText;
+    TextView mEventName;
+
 
     @InjectView(DetailTextView)
     TextView mMeetingDetail;
@@ -72,6 +70,8 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     public static final String ARG_GIVEN_NAME = "givenName";
     public static final String ARG_DISPLAY_ID = "displayableId";
 
+    private EventConstants mEventConstants = new EventConstants();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +86,7 @@ public class EventActivity extends AppCompatActivity implements ICallback {
             eventProvider.getNextEvent(this);
 
         }
+
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -117,6 +118,48 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         mMicrosoftEvent = result;
 
         //get event values from map and populate screen
+        mEventName.setText(
+                eventProvider
+                        .getEventValues()
+                        .get(mEventConstants.EVENT_SUBJECT));
+
+        mMeetingDetail.setText(
+                eventProvider
+                .getEventValues()
+                .get(mEventConstants.EVENT_DETAIL)
+        );
+        mLocationCity.setText(
+                eventProvider
+                        .getEventValues()
+                        .get(mEventConstants.EVENT_LOCATION_CITY));
+        mLocationName.setText(
+                eventProvider
+                        .getEventValues()
+                        .get(mEventConstants.EVENT_LOCATION_NAME));
+        mLocationStreet.setText(
+                eventProvider
+                        .getEventValues()
+                        .get(mEventConstants.EVENT_LOCATION_STREET));
+        mLocationState.setText(
+                eventProvider
+                        .getEventValues()
+                        .get(mEventConstants.EVENT_LOCATION_STATE));
+        mPostalCode.setText(
+                eventProvider
+                        .getEventValues()
+                        .get(mEventConstants.EVENT_LOCATION_POSTAL_CODE));
+        mReservationStatus.setText(
+                eventProvider
+                        .getEventValues()
+                        .get(mEventConstants.EVENT_RESERVATION_STATUS));
+        mReservationText.setText(
+                eventProvider
+                        .getEventValues()
+                        .get(mEventConstants.EVENT_RESERVATION_NUMBER));
+        mStartDate.setText(
+                eventProvider
+                        .getEventValues()
+                        .get(mEventConstants.EVENT_START_DATE));
 
     }
 
