@@ -1,7 +1,5 @@
 package com.microsoft.office.EventRobot;
 
-import android.widget.TextView;
-
 import android.app.SearchManager;
 import android.app.assist.AssistContent;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
-import org.w3c.dom.Text;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +34,7 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         queryTextView = (TextView)findViewById(R.id.queryTextView);
         if(getIntent().hasExtra(SearchManager.QUERY)){
             queryTextView.setText(getIntent().getStringExtra(SearchManager.QUERY));
-            eventProvider = new MockEventManager();
+            eventProvider = new EventManager(this.getApplicationContext());
             eventProvider.getNextEvent(this);
         }
 
@@ -73,7 +70,7 @@ public class EventActivity extends AppCompatActivity implements ICallback {
 
     @Override
     public void onFailure(Exception e) {
-
+        Log.e("EventRobot", e.getMessage());
     }
     @Override
     public void onProvideAssistContent(AssistContent assistContent) {
@@ -84,8 +81,8 @@ public class EventActivity extends AppCompatActivity implements ICallback {
             String attendeeJson = new JSONObject()
                     .put("@context","http://schema.org")
                     .put("@type","person")
-                    .put("familyName","Smith")
-                    .put("givenName","Brad").toString();
+                    .put("familyName","Loo")
+                    .put("givenName","Ricardo").toString();
             String postalAddressJson = new JSONObject()
                     .put("@context","http://schema.org")
                     .put("@type","postalAddress")
