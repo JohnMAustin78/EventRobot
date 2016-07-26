@@ -3,8 +3,6 @@ package com.microsoft.office.EventRobot;
 import android.content.Context;
 import android.util.Log;
 
-import org.joda.time.DateTime;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,10 +13,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.text.DateFormat;
-import java.text.ParseException;
+import org.joda.time.DateTime;
+
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +25,7 @@ import java.util.Map;
  */
 public class EventManager implements IEventProvider {
     private Context mContext;
-    private Map<String,String> mEventValues;
+    private HashMap<String,String> mEventValues;
     static String EVENT_ENDPOINT = "https://graph.microsoft.com/v1.0/me/calendarview?$top=1&$orderby=start/datetime"
             + "&StartDateTime=" + new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date())
             + "&EndDateTime=" + new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.now().plusDays(1).toDate());
@@ -159,7 +156,22 @@ public class EventManager implements IEventProvider {
     }
 
     @Override
-    public Map<String, String> getEventValues() {
+    public HashMap<String, String> getEventValues() {
+        EventConstants eventConstants = new EventConstants();
+        if (mEventValues == null){
+            mEventValues = new HashMap<String, String>();
+            mEventValues.put(eventConstants.EVENT_RESERVATION_NUMBER,"123");
+            mEventValues.put(eventConstants.EVENT_RESERVATION_STATUS,"Confirmed");
+            mEventValues.put(eventConstants.EVENT_SUBJECT,"Discuss vacation");
+            mEventValues.put(eventConstants.EVENT_DETAIL,"Vacation plans for the group");
+            mEventValues.put(eventConstants.EVENT_UNDER_NAME,"John Austin");
+            mEventValues.put(eventConstants.EVENT_START_DATE,"2014-01-01T00:00:00Z");
+            mEventValues.put(eventConstants.EVENT_LOCATION_NAME,"Seattle Center");
+            mEventValues.put(eventConstants.EVENT_LOCATION_STREET,"1234 Easy Street");
+            mEventValues.put(eventConstants.EVENT_LOCATION_CITY,"Seattle");
+            mEventValues.put(eventConstants.EVENT_LOCATION_STATE,"Wa");
+            mEventValues.put(eventConstants.EVENT_LOCATION_POSTAL_CODE,"98433");
+        }
         return mEventValues;
     }
 
