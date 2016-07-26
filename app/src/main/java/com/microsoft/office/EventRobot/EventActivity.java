@@ -48,7 +48,7 @@ public class EventActivity extends AppCompatActivity implements ICallback {
 
     @InjectView(DetailTextView)
     TextView mMeetingDetail;
-    
+
     @InjectView(ReservationTextView2)
     TextView mReservationText;
 
@@ -84,8 +84,11 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         setContentView(R.layout.activity_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ButterKnife.inject(this);
+
         if(getIntent().hasExtra(SearchManager.QUERY)){
-            mEventJson.setText(getIntent().getStringExtra(SearchManager.QUERY));
+           // mEventJson.setText(getIntent().getStringExtra(SearchManager.QUERY));
             eventProvider = new MockEventManager();
             eventProvider.getNextEvent(this);
 
@@ -93,7 +96,6 @@ public class EventActivity extends AppCompatActivity implements ICallback {
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ButterKnife.inject(this);
     }
 
     @Override
@@ -135,8 +137,10 @@ public class EventActivity extends AppCompatActivity implements ICallback {
 
         String structuredJson = null;
 
-        structuredJson = eventProvider.convertToAssistContent(mMicrosoftEvent);
-        assistContent.setStructuredData(structuredJson);
+        if (mMicrosoftEvent != null) {
+            structuredJson = eventProvider.convertToAssistContent(mMicrosoftEvent);
+            assistContent.setStructuredData(structuredJson);
+        }
         super.onProvideAssistContent(assistContent);
 
     }
