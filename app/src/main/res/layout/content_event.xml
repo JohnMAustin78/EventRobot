@@ -86,17 +86,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="subject"
+        android:text=""
         android:id="@+id/SubjectText"
         android:layout_alignTop="@+id/subjectTextView"
-        />
+        android:maxLines="1" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="meeting detail"
+        android:text=""
         android:id="@+id/DetailTextView"
         android:layout_alignTop="@+id/DetailTextView2"
         android:lines="1"
@@ -108,17 +108,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="123"
+        android:text=""
         android:id="@+id/ReservationTextView2"
         android:layout_alignBottom="@+id/ReservationTextView"
-         />
+        android:maxLines="1" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="confirmed"
+        android:text=""
         android:id="@+id/statusTextView2"
         android:layout_alignTop="@+id/statusTextView"
          />
@@ -128,17 +128,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="8/1/2016"
+        android:text=""
         android:id="@+id/startDateTextView2"
         android:layout_below="@+id/statusTextView2"
-         />
+        android:maxLines="1" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Seattle"
+        android:text=""
         android:id="@+id/LocationTextView2"
         android:layout_alignTop="@+id/locationTextView"
          />
@@ -148,7 +148,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="123 Easy street"
+        android:text=""
         android:id="@+id/streetTextView"
         android:layout_below="@+id/LocationTextView2"
          />
@@ -159,7 +159,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="Seattle"
+    android:text=""
     android:id="@+id/cityTextView"
     android:layout_below="@+id/streetTextView"
     />
@@ -168,7 +168,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="WA"
+        android:text=""
         android:id="@+id/stateTextView"
         android:layout_below="@+id/streetTextView"
         android:layout_toEndOf="@+id/cityTextView"
@@ -179,7 +179,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="98123"
+        android:text=""
         android:id="@+id/postalCodeTextView"
         android:layout_below="@+id/cityTextView"
          />

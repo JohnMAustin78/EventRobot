@@ -119,7 +119,7 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     @Override
     public void onSuccess(JsonObject result) {
         mMicrosoftEvent = result;
-
+        eventProvider.convertToAssistContent(mMicrosoftEvent);
         //get event values from map and populate screen
         mEventName.setText(
                 eventProvider

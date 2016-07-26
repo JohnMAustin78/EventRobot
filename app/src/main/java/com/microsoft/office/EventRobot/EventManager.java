@@ -14,6 +14,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -72,6 +74,8 @@ public class EventManager implements IEventProvider {
     @Override
     public String convertToAssistContent(JsonObject microsoftEvent){
 
+        mEventValues = makeKVEventMap();
+
         String startDate = null;
         String locationName = null;
         String locationAddressStreet = null;
@@ -80,9 +84,14 @@ public class EventManager implements IEventProvider {
         String locationAddressPostalCode = null;
         String locationAddressCountry = null;
         String organizerName = null;
-
+        EventConstants eventConstants = new EventConstants();
         try {
 
+
+            mEventValues.put(eventConstants.EVENT_RESERVATION_NUMBER,microsoftEvent.get("id").toString());
+            mEventValues.put(eventConstants.EVENT_RESERVATION_STATUS,"Confirmed");
+            mEventValues.put(eventConstants.EVENT_SUBJECT,microsoftEvent.get("subject").toString());
+            mEventValues.put(eventConstants.EVENT_DETAIL,microsoftEvent.get("bodyPreview").toString());
 
             Object thing = microsoftEvent.get("organizer");
             if (thing.getClass().equals(JsonObject.class)) {
@@ -94,6 +103,7 @@ public class EventManager implements IEventProvider {
                 // .getAsString();
             }
 
+            mEventValues.put(eventConstants.EVENT_UNDER_NAME,organizerName);
             thing = microsoftEvent.get("start");
             if (thing.getClass().equals(JsonObject.class)) {
                 startDate = microsoftEvent
@@ -102,6 +112,16 @@ public class EventManager implements IEventProvider {
                         .getAsString();
             }
 
+            //the pattern does not match the pattern from O365, 2digit year vs. 4
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+            try {
+                DateTime dt = formatter.parseDateTime(startDate);
+                mEventValues.put(eventConstants.EVENT_START_DATE,dt.toLocalDateTime().toString("dd/MM/yyyy"));
+
+
+            } catch (Exception e){
+                Log.e("EventManger","Exception in EventManager " + e.getMessage());
+            }
 
             thing = microsoftEvent.get("location");
             if (thing.getClass().equals(JsonObject.class)) {
@@ -109,19 +129,27 @@ public class EventManager implements IEventProvider {
                 locationName = location
                         .getAsJsonPrimitive("displayName")
                         .getAsString();
+                mEventValues.put(eventConstants.EVENT_LOCATION_NAME,locationName);
+
+
                 JsonObject physicalAddress = location.getAsJsonObject("address");
                 locationAddressStreet = physicalAddress
                         .getAsJsonPrimitive("street")
                         .getAsString();
+                mEventValues.put(eventConstants.EVENT_LOCATION_STREET,locationAddressStreet);
 
                 locationAddressCity = physicalAddress
                         .getAsJsonPrimitive("city").getAsString();
+                mEventValues.put(eventConstants.EVENT_LOCATION_CITY,locationAddressCity);
 
                 locationAddressState = physicalAddress
                         .getAsJsonPrimitive("state").getAsString();
+                mEventValues.put(eventConstants.EVENT_LOCATION_STATE,locationAddressState);
 
                 locationAddressPostalCode = physicalAddress
                         .getAsJsonPrimitive("postalCode").getAsString();
+                mEventValues.put(eventConstants.EVENT_LOCATION_POSTAL_CODE,locationAddressPostalCode);
+
 
                 locationAddressCountry = physicalAddress
                         .getAsJsonPrimitive("countryOrRegion").getAsString();
@@ -158,6 +186,10 @@ public class EventManager implements IEventProvider {
                 "  }\n" +
                 "}";
 
+    }
+
+    private HashMap<String, String> makeKVEventMap(){
+        return new HashMap<String, String>();
     }
 
     @Override
