@@ -1,7 +1,11 @@
 package com.microsoft.office.EventRobot;
 
+import android.util.Log;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.json.JSONObject;
 
 /**
  * Created by ricardol on 7/25/2016.
@@ -95,5 +99,95 @@ public class MockEventManager implements IEventProvider {
         JsonParser parser = new JsonParser();
 
         callback.onSuccess((JsonObject)parser.parse(fakeEvent));
+    }
+    public String convertToAssistContent(JsonObject microsoftEvent){
+
+        String structuredJson = new JSONObject().toString();
+        String startDate = null;
+        String locationName = null;
+        String locationAddressStreet = null;
+        String locationAddressCity = null;
+        String locationAddressState = null;
+        String locationAddressPostalCode = null;
+        String locationAddressCountry = null;
+        String organizerName = null;
+
+        try {
+
+
+            Object thing = microsoftEvent.get("organizer");
+            if (thing.getClass().equals(JsonObject.class)) {
+                organizerName = microsoftEvent
+                        .getAsJsonObject("organizer")
+                        .getAsJsonObject("emailAddress")
+                        .getAsJsonPrimitive("name")
+                        .toString();
+                // .getAsString();
+            }
+
+            thing = microsoftEvent.get("start");
+            if (thing.getClass().equals(JsonObject.class)) {
+                startDate = microsoftEvent
+                        .getAsJsonObject("start")
+                        .getAsJsonPrimitive("dateTime")
+                        .getAsString();
+            }
+
+
+            thing = microsoftEvent.get("location");
+            if (thing.getClass().equals(JsonObject.class)) {
+                JsonObject location = microsoftEvent.getAsJsonObject("location");
+                locationName = location
+                        .getAsJsonPrimitive("displayName")
+                        .getAsString();
+                JsonObject physicalAddress = location.getAsJsonObject("address");
+                locationAddressStreet = physicalAddress
+                        .getAsJsonPrimitive("street")
+                        .getAsString();
+
+                locationAddressCity = physicalAddress
+                        .getAsJsonPrimitive("city").getAsString();
+
+                locationAddressState = physicalAddress
+                        .getAsJsonPrimitive("state").getAsString();
+
+                locationAddressPostalCode = physicalAddress
+                        .getAsJsonPrimitive("postalCode").getAsString();
+
+                locationAddressCountry = physicalAddress
+                        .getAsJsonPrimitive("countryOrRegion").getAsString();
+
+            }
+        } catch (NullPointerException e){
+            Log.e("MockEventManager","Null pointer" + e.getMessage());
+        }
+        return             structuredJson = "{\n" +
+                    "  \"@context\": \"http://schema.org\",\n" +
+                    "  \"@type\": \"EventReservation\",\n" +
+                    "  \"reservationNumber\":\"E123456789\",\n" +
+                    "  \"reservationStatus\": \"http://schema.org/Confirmed\",\n" +
+                    "  \"underName\": {\n" +
+                    "    \"@type\": \"Person\",\n" +
+                    "    \"name\":"+organizerName+"\n" +
+                    "  },\n" +
+                    "  \"reservationFor\": {\n" +
+                    "    \"@type\": \"Event\",\n" +
+                    "    \"name\":"+ microsoftEvent.get("subject").getAsString()+",\n" +
+                    "    \"startDate\":"+startDate+",\n" +
+                    "    \"location\": {\n" +
+                    "      \"@type\": \"Place\",\n" +
+                    "      \"name\":"+locationName+",\n" +
+                    "      \"address\": {\n" +
+                    "        \"@type\": \"PostalAddress\",\n" +
+                    "        \"streetAddress\":" +locationAddressStreet+",\n" +
+                    "        \"addressLocality\":"+locationAddressCity+",\n" +
+                    "        \"addressRegion\":"+locationAddressState+",\n" +
+                    "        \"postalCode\":" +locationAddressPostalCode+ ",\n" +
+                    "        \"addressCountry\":"+locationAddressCountry+"\n" +
+                    "      }\n" +
+                    "    }\n" +
+                    "  }\n" +
+                    "}";
+
     }
 }

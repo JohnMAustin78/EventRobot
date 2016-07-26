@@ -1,26 +1,20 @@
 package com.microsoft.office.EventRobot;
 
-import android.widget.TextView;
-
 import android.app.SearchManager;
 import android.app.assist.AssistContent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
-import org.w3c.dom.Text;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 
 public class EventActivity extends AppCompatActivity implements ICallback {
     IEventProvider eventProvider;
+    JsonObject mMicrosoftEvent;
     TextView eventDetail;
     TextView queryTextView;
     // arguments for this activity
@@ -39,6 +33,7 @@ public class EventActivity extends AppCompatActivity implements ICallback {
             queryTextView.setText(getIntent().getStringExtra(SearchManager.QUERY));
             eventProvider = new MockEventManager();
             eventProvider.getNextEvent(this);
+
         }
 
 
@@ -69,6 +64,8 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     @Override
     public void onSuccess(JsonObject result) {
         eventDetail.setText(result.toString());
+        mMicrosoftEvent = result;
+
     }
 
     @Override
@@ -77,66 +74,16 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     }
     @Override
     public void onProvideAssistContent(AssistContent assistContent) {
-        //  super.onProvideAssistContent(assistContent);
 
         String structuredJson = null;
-        try {
-            String attendeeJson = new JSONObject()
-                    .put("@context","http://schema.org")
-                    .put("@type","person")
-                    .put("familyName","Smith")
-                    .put("givenName","Brad").toString();
-            String postalAddressJson = new JSONObject()
-                    .put("@context","http://schema.org")
-                    .put("@type","postalAddress")
-                    .put("postalCode","98466")
-                    .put("streetAddress","9726 Vision court")
-                    .put("addressLocality","Garden Grove")
-                    .put("addressRegion","CA").toString();
 
-            structuredJson = new JSONObject()
-                    .put("@context","http://schema.org")
-                    .put("@type","event")
-                    .put("attendee", attendeeJson)
-                    .put("location", postalAddressJson)
-                    .put("startDate", "2017-03-06T19:30:00-08:00")
-                    .toString();
-
-//            structuredJson = "{\n" +
-//                    "  \"@context\": \"http://schema.org\",\n" +
-//                    "  \"@type\": \"EventReservation\",\n" +
-//                    "  \"reservationNumber\": \"E123456789\",\n" +
-//                    "  \"reservationStatus\": \"http://schema.org/Confirmed\",\n" +
-//                    "  \"underName\": {\n" +
-//                    "    \"@type\": \"Person\",\n" +
-//                    "    \"name\": \"John Smith\"\n" +
-//                    "  },\n" +
-//                    "  \"reservationFor\": {\n" +
-//                    "    \"@type\": \"Event\",\n" +
-//                    "    \"name\": \"Foo Fighters Concert\",\n" +
-//                    "    \"startDate\": \"2017-03-06T19:30:00-08:00\",\n" +
-//                    "    \"location\": {\n" +
-//                    "      \"@type\": \"Place\",\n" +
-//                    "      \"name\": \"AT&T Park\",\n" +
-//                    "      \"address\": {\n" +
-//                    "        \"@type\": \"PostalAddress\",\n" +
-//                    "        \"streetAddress\": \"24 Willie Mays Plaza\",\n" +
-//                    "        \"addressLocality\": \"San Francisco\",\n" +
-//                    "        \"addressRegion\": \"CA\",\n" +
-//                    "        \"postalCode\": \"94107\",\n" +
-//                    "        \"addressCountry\": \"US\"\n" +
-//                    "      }\n" +
-//                    "    }\n" +
-//                    "  }\n" +
-//                    "}";
-
-            Log.i("Json", structuredJson);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        structuredJson = eventProvider.convertToAssistContent(mMicrosoftEvent);
         assistContent.setStructuredData(structuredJson);
         super.onProvideAssistContent(assistContent);
+
+    }
+
+    private void fillScreenPrompts(JsonObject microsoftEvent){
 
     }
 }
