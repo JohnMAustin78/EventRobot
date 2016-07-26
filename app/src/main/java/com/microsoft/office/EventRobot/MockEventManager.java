@@ -5,12 +5,14 @@ import android.util.Log;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import org.json.JSONObject;
+import java.util.Map;
 
 /**
  * Created by ricardol on 7/25/2016.
  */
 public class MockEventManager implements IEventProvider {
+
+    private Map<String,String> mEventValues;
     public void getNextEvent(ICallback callback) {
         String fakeEvent = "{\n" +
                 "            \"@odata.etag\": \"W/\\\"K7T5f6aJskSLQawF2628UAAAE2Tftg==\\\"\",\n" +
@@ -97,12 +99,11 @@ public class MockEventManager implements IEventProvider {
                 "        }";
 
         JsonParser parser = new JsonParser();
-
+        //Fill event value map for UI.
         callback.onSuccess((JsonObject)parser.parse(fakeEvent));
     }
     public String convertToAssistContent(JsonObject microsoftEvent){
 
-        String structuredJson = new JSONObject().toString();
         String startDate = null;
         String locationName = null;
         String locationAddressStreet = null;
@@ -161,7 +162,7 @@ public class MockEventManager implements IEventProvider {
         } catch (NullPointerException e){
             Log.e("MockEventManager","Null pointer" + e.getMessage());
         }
-        return             structuredJson = "{\n" +
+        return  "{\n" +
                     "  \"@context\": \"http://schema.org\",\n" +
                     "  \"@type\": \"EventReservation\",\n" +
                     "  \"reservationNumber\":\"E123456789\",\n" +
@@ -189,5 +190,10 @@ public class MockEventManager implements IEventProvider {
                     "  }\n" +
                     "}";
 
+    }
+
+    @Override
+    public Map<String, String> getEventValues() {
+        return mEventValues;
     }
 }

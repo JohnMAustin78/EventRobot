@@ -11,12 +11,69 @@ import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+import static com.microsoft.office.EventRobot.R.id.DetailTextView;
+import static com.microsoft.office.EventRobot.R.id.LocationTextView2;
+import static com.microsoft.office.EventRobot.R.id.ReservationTextView2;
+import static com.microsoft.office.EventRobot.R.id.SubjectText;
+import static com.microsoft.office.EventRobot.R.id.cityTextView;
+import static com.microsoft.office.EventRobot.R.id.postalCodeTextView;
+import static com.microsoft.office.EventRobot.R.id.queryTextView;
+import static com.microsoft.office.EventRobot.R.id.startDateTextView2;
+import static com.microsoft.office.EventRobot.R.id.stateTextView;
+import static com.microsoft.office.EventRobot.R.id.statusTextView2;
+import static com.microsoft.office.EventRobot.R.id.streetTextView;
+import static com.microsoft.office.EventRobot.R.id.subjectTextView;
+import static com.microsoft.office.EventRobot.R.id.textView;
+
+
 
 public class EventActivity extends AppCompatActivity implements ICallback {
     IEventProvider eventProvider;
     JsonObject mMicrosoftEvent;
-    TextView eventDetail;
-    TextView queryTextView;
+
+    @InjectView(textView)
+    TextView mEventDetail;
+
+    @InjectView(queryTextView)
+    TextView mEventJson;
+
+    @InjectView(subjectTextView)
+    TextView mEventName;
+
+    @InjectView(SubjectText)
+    TextView mSubjectText;
+
+    @InjectView(DetailTextView)
+    TextView mMeetingDetail;
+    
+    @InjectView(ReservationTextView2)
+    TextView mReservationText;
+
+    @InjectView(statusTextView2)
+    TextView mReservationStatus;
+
+    @InjectView(startDateTextView2)
+    TextView mStartDate;
+
+    @InjectView(LocationTextView2)
+    TextView mLocationName;
+
+    @InjectView(streetTextView)
+    TextView mLocationStreet;
+
+    @InjectView(cityTextView)
+    TextView mLocationCity;
+
+    @InjectView(stateTextView)
+    TextView mLocationState;
+
+    @InjectView(postalCodeTextView)
+    TextView mPostalCode;
+
+    TextView mqueryTextView;
     // arguments for this activity
     public static final String ARG_GIVEN_NAME = "givenName";
     public static final String ARG_DISPLAY_ID = "displayableId";
@@ -27,10 +84,8 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         setContentView(R.layout.activity_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        eventDetail = (TextView)findViewById(R.id.textView);
-        queryTextView = (TextView)findViewById(R.id.queryTextView);
         if(getIntent().hasExtra(SearchManager.QUERY)){
-            queryTextView.setText(getIntent().getStringExtra(SearchManager.QUERY));
+            mEventJson.setText(getIntent().getStringExtra(SearchManager.QUERY));
             eventProvider = new MockEventManager();
             eventProvider.getNextEvent(this);
 
@@ -38,6 +93,7 @@ public class EventActivity extends AppCompatActivity implements ICallback {
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ButterKnife.inject(this);
     }
 
     @Override
@@ -63,8 +119,10 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     }
     @Override
     public void onSuccess(JsonObject result) {
-        eventDetail.setText(result.toString());
+        mEventDetail.setText(result.toString());
         mMicrosoftEvent = result;
+
+        //get event values from map and populate screen
 
     }
 
