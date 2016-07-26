@@ -43,8 +43,13 @@ public class EventManager implements IEventProvider {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        JsonObject result = (JsonObject) new JsonParser().parse(response).getAsJsonObject().getAsJsonArray("value").get(0);
-                        callback.onSuccess(result);
+                        try {
+                            JsonObject result = (JsonObject) new JsonParser().parse(response).getAsJsonObject().getAsJsonArray("value").get(0);
+                            callback.onSuccess(result);
+                        }
+                        catch(Exception e){
+                            Log.e("EventProvider","Exception " + e.getMessage());
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override

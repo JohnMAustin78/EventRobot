@@ -33,9 +33,6 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     IEventProvider eventProvider;
     JsonObject mMicrosoftEvent;
 
-
-
-
     @InjectView(SubjectText)
     TextView mEventName;
 
