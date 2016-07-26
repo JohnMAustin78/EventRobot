@@ -65,10 +65,49 @@ public class MockEventManager implements IEventProvider {
             organizerName = microsoftEvent
                     .getAsJsonObject("organizer")
                     .getAsJsonObject("emailAddress")
-                    .getAsJsonObject("name")
+                    .getAsJsonPrimitive("name")
                     .getAsString();
         }
 
+        String startDate = null;
+        thing = microsoftEvent.get("start");
+        if (thing.getClass().equals(JsonObject.class)){
+             startDate = microsoftEvent
+                    .getAsJsonObject("start")
+                    .getAsJsonPrimitive("dateTime")
+                    .getAsString();
+        }
+        String locationName = null;
+        String locationAddressStreet = null;
+        String locationAddressCity = null;
+        String locationAddressState = null;
+        String locationAddressPostalCode = null;
+        String locationAddressCountry = null;
+
+        thing = microsoftEvent.get("location");
+        if (thing.getClass().equals(JsonObject.class)){
+            JsonObject location = microsoftEvent.getAsJsonObject("location");
+            locationName = location
+                    .getAsJsonPrimitive("displayName")
+                    .getAsString();
+            JsonObject physicalAddress = location.getAsJsonObject("address");
+            locationAddressStreet = physicalAddress
+                    .getAsJsonPrimitive("street")
+                    .getAsString();
+
+            locationAddressCity = physicalAddress
+                    .getAsJsonPrimitive("city").getAsString();
+
+            locationAddressState = physicalAddress
+                    .getAsJsonPrimitive("state").getAsString();
+
+            locationAddressPostalCode = physicalAddress
+                    .getAsJsonPrimitive("postalCode").getAsString();
+
+            locationAddressCountry = physicalAddress
+                    .getAsJsonPrimitive("countryOrRegion").getAsString();
+
+        }
 
         return             structuredJson = "{\n" +
                     "  \"@context\": \"http://schema.org\",\n" +
@@ -81,18 +120,18 @@ public class MockEventManager implements IEventProvider {
                     "  },\n" +
                     "  \"reservationFor\": {\n" +
                     "    \"@type\": \"Event\",\n" +
-                    "    \"name\": \"Foo Fighters Concert\",\n" +
-                    "    \"startDate\": \"2017-03-06T19:30:00-08:00\",\n" +
+                    "    \"name\":"+ microsoftEvent.get("subject").getAsString()+",\n" +
+                    "    \"startDate\":"+startDate+",\n" +
                     "    \"location\": {\n" +
                     "      \"@type\": \"Place\",\n" +
-                    "      \"name\": \"AT&T Park\",\n" +
+                    "      \"name\":"+locationName+",\n" +
                     "      \"address\": {\n" +
                     "        \"@type\": \"PostalAddress\",\n" +
-                    "        \"streetAddress\": \"24 Willie Mays Plaza\",\n" +
-                    "        \"addressLocality\": \"San Francisco\",\n" +
-                    "        \"addressRegion\": \"CA\",\n" +
-                    "        \"postalCode\": \"94107\",\n" +
-                    "        \"addressCountry\": \"US\"\n" +
+                    "        \"streetAddress\":" +locationAddressStreet+",\n" +
+                    "        \"addressLocality\":"+locationAddressCity+",\n" +
+                    "        \"addressRegion\":"+locationAddressState+",\n" +
+                    "        \"postalCode\":" +locationAddressPostalCode+ ",\n" +
+                    "        \"addressCountry\":"+locationAddressCountry+"\n" +
                     "      }\n" +
                     "    }\n" +
                     "  }\n" +
