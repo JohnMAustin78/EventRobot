@@ -9,17 +9,66 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
+import static com.microsoft.office.EventRobot.R.id.DetailTextView;
+import static com.microsoft.office.EventRobot.R.id.LocationTextView2;
+import static com.microsoft.office.EventRobot.R.id.ReservationTextView2;
+import static com.microsoft.office.EventRobot.R.id.SubjectText;
+import static com.microsoft.office.EventRobot.R.id.cityTextView;
+import static com.microsoft.office.EventRobot.R.id.postalCodeTextView;
+import static com.microsoft.office.EventRobot.R.id.startDateTextView2;
+import static com.microsoft.office.EventRobot.R.id.stateTextView;
+import static com.microsoft.office.EventRobot.R.id.statusTextView2;
+import static com.microsoft.office.EventRobot.R.id.streetTextView;
+import static com.microsoft.office.EventRobot.R.id.subjectTextView;
 
 public class EventActivity extends AppCompatActivity implements ICallback {
     IEventProvider eventProvider;
-    TextView eventDetail;
-    TextView queryTextView;
+    JsonObject mMicrosoftEvent;
+
+
+
+    @InjectView(subjectTextView)
+    TextView mEventName;
+
+    @InjectView(SubjectText)
+    TextView mSubjectText;
+
+    @InjectView(DetailTextView)
+    TextView mMeetingDetail;
+
+    @InjectView(ReservationTextView2)
+    TextView mReservationText;
+
+    @InjectView(statusTextView2)
+    TextView mReservationStatus;
+
+    @InjectView(startDateTextView2)
+    TextView mStartDate;
+
+    @InjectView(LocationTextView2)
+    TextView mLocationName;
+
+    @InjectView(streetTextView)
+    TextView mLocationStreet;
+
+    @InjectView(cityTextView)
+    TextView mLocationCity;
+
+    @InjectView(stateTextView)
+    TextView mLocationState;
+
+    @InjectView(postalCodeTextView)
+    TextView mPostalCode;
+
     // arguments for this activity
     public static final String ARG_GIVEN_NAME = "givenName";
     public static final String ARG_DISPLAY_ID = "displayableId";
@@ -30,12 +79,18 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         setContentView(R.layout.activity_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        eventDetail = (TextView)findViewById(R.id.textView);
-        queryTextView = (TextView)findViewById(R.id.queryTextView);
+
+        ButterKnife.inject(this);
+
         if(getIntent().hasExtra(SearchManager.QUERY)){
-            queryTextView.setText(getIntent().getStringExtra(SearchManager.QUERY));
+            Toast.makeText(
+                    EventActivity.this,
+                    "Search query: " + getIntent().getStringExtra(SearchManager.QUERY),
+                    Toast.LENGTH_LONG).show();
             eventProvider = new EventManager(this.getApplicationContext());
+
             eventProvider.getNextEvent(this);
+
         }
 
 
@@ -65,7 +120,10 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     }
     @Override
     public void onSuccess(JsonObject result) {
-        eventDetail.setText(result.toString());
+        mMicrosoftEvent = result;
+
+        //get event values from map and populate screen
+
     }
 
     @Override
@@ -74,7 +132,6 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     }
     @Override
     public void onProvideAssistContent(AssistContent assistContent) {
-        //  super.onProvideAssistContent(assistContent);
 
         String structuredJson = null;
         try {
@@ -132,8 +189,15 @@ public class EventActivity extends AppCompatActivity implements ICallback {
             e.printStackTrace();
         }
 
-        assistContent.setStructuredData(structuredJson);
+        if (mMicrosoftEvent != null) {
+            structuredJson = eventProvider.convertToAssistContent(mMicrosoftEvent);
+            assistContent.setStructuredData(structuredJson);
+        }
         super.onProvideAssistContent(assistContent);
+
+    }
+
+    private void fillScreenPrompts(JsonObject microsoftEvent){
 
     }
 }
