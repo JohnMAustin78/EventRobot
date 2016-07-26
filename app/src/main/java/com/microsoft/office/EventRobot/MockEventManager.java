@@ -1,5 +1,7 @@
 package com.microsoft.office.EventRobot;
 
+import android.util.Log;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -56,59 +58,65 @@ public class MockEventManager implements IEventProvider {
     }
     public String convertToAssistContent(JsonObject microsoftEvent){
 
-
-
         String structuredJson = new JSONObject().toString();
-        Object thing = microsoftEvent.get("organizer");
-        String organizerName = null;
-        if (thing.getClass().equals(JsonObject.class)) {
-            organizerName = microsoftEvent
-                    .getAsJsonObject("organizer")
-                    .getAsJsonObject("emailAddress")
-                    .getAsJsonPrimitive("name")
-                    .getAsString();
-        }
-
         String startDate = null;
-        thing = microsoftEvent.get("start");
-        if (thing.getClass().equals(JsonObject.class)){
-             startDate = microsoftEvent
-                    .getAsJsonObject("start")
-                    .getAsJsonPrimitive("dateTime")
-                    .getAsString();
-        }
         String locationName = null;
         String locationAddressStreet = null;
         String locationAddressCity = null;
         String locationAddressState = null;
         String locationAddressPostalCode = null;
         String locationAddressCountry = null;
+        String organizerName = null;
 
-        thing = microsoftEvent.get("location");
-        if (thing.getClass().equals(JsonObject.class)){
-            JsonObject location = microsoftEvent.getAsJsonObject("location");
-            locationName = location
-                    .getAsJsonPrimitive("displayName")
-                    .getAsString();
-            JsonObject physicalAddress = location.getAsJsonObject("address");
-            locationAddressStreet = physicalAddress
-                    .getAsJsonPrimitive("street")
-                    .getAsString();
+        try {
 
-            locationAddressCity = physicalAddress
-                    .getAsJsonPrimitive("city").getAsString();
 
-            locationAddressState = physicalAddress
-                    .getAsJsonPrimitive("state").getAsString();
+            Object thing = microsoftEvent.get("organizer");
+            if (thing.getClass().equals(JsonObject.class)) {
+                organizerName = microsoftEvent
+                        .getAsJsonObject("organizer")
+                        .getAsJsonObject("emailAddress")
+                        .getAsJsonPrimitive("name")
+                        .toString();
+                // .getAsString();
+            }
 
-            locationAddressPostalCode = physicalAddress
-                    .getAsJsonPrimitive("postalCode").getAsString();
+            thing = microsoftEvent.get("start");
+            if (thing.getClass().equals(JsonObject.class)) {
+                startDate = microsoftEvent
+                        .getAsJsonObject("start")
+                        .getAsJsonPrimitive("dateTime")
+                        .getAsString();
+            }
 
-            locationAddressCountry = physicalAddress
-                    .getAsJsonPrimitive("countryOrRegion").getAsString();
 
+            thing = microsoftEvent.get("location");
+            if (thing.getClass().equals(JsonObject.class)) {
+                JsonObject location = microsoftEvent.getAsJsonObject("location");
+                locationName = location
+                        .getAsJsonPrimitive("displayName")
+                        .getAsString();
+                JsonObject physicalAddress = location.getAsJsonObject("address");
+                locationAddressStreet = physicalAddress
+                        .getAsJsonPrimitive("street")
+                        .getAsString();
+
+                locationAddressCity = physicalAddress
+                        .getAsJsonPrimitive("city").getAsString();
+
+                locationAddressState = physicalAddress
+                        .getAsJsonPrimitive("state").getAsString();
+
+                locationAddressPostalCode = physicalAddress
+                        .getAsJsonPrimitive("postalCode").getAsString();
+
+                locationAddressCountry = physicalAddress
+                        .getAsJsonPrimitive("countryOrRegion").getAsString();
+
+            }
+        } catch (NullPointerException e){
+            Log.e("MockEventManager","Null pointer" + e.getMessage());
         }
-
         return             structuredJson = "{\n" +
                     "  \"@context\": \"http://schema.org\",\n" +
                     "  \"@type\": \"EventReservation\",\n" +
