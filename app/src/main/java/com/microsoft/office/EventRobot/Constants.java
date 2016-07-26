@@ -7,7 +7,7 @@ package com.microsoft.office.EventRobot;
 interface Constants {
     String AUTHORITY_URL = "https://login.microsoftonline.com/common";
     // Update these two constants with the values for your application:
-    String CLIENT_ID = "f171f55f-8b03-4991-93f1-dd1a917dce51";
-    String REDIRECT_URI = "https://www.patsoldemo4.com";
+    String CLIENT_ID = "0045129f-2641-4b2a-bcd4-f536c0f89593";
+    String REDIRECT_URI = "https://graphbot.mod265542.onmicrosoft.com";
     String MICROSOFT_GRAPH_API_ENDPOINT_RESOURCE_ID = "https://graph.microsoft.com/";
 }
