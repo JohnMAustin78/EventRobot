@@ -20,13 +20,11 @@ import static com.microsoft.office.EventRobot.R.id.ReservationTextView2;
 import static com.microsoft.office.EventRobot.R.id.SubjectText;
 import static com.microsoft.office.EventRobot.R.id.cityTextView;
 import static com.microsoft.office.EventRobot.R.id.postalCodeTextView;
-import static com.microsoft.office.EventRobot.R.id.queryTextView;
 import static com.microsoft.office.EventRobot.R.id.startDateTextView2;
 import static com.microsoft.office.EventRobot.R.id.stateTextView;
 import static com.microsoft.office.EventRobot.R.id.statusTextView2;
 import static com.microsoft.office.EventRobot.R.id.streetTextView;
 import static com.microsoft.office.EventRobot.R.id.subjectTextView;
-import static com.microsoft.office.EventRobot.R.id.textView;
 
 
 
@@ -34,11 +32,7 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     IEventProvider eventProvider;
     JsonObject mMicrosoftEvent;
 
-    @InjectView(textView)
-    TextView mEventDetail;
 
-    @InjectView(queryTextView)
-    TextView mEventJson;
 
     @InjectView(subjectTextView)
     TextView mEventName;
@@ -88,7 +82,6 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         ButterKnife.inject(this);
 
         if(getIntent().hasExtra(SearchManager.QUERY)){
-           // mEventJson.setText(getIntent().getStringExtra(SearchManager.QUERY));
             eventProvider = new MockEventManager();
             eventProvider.getNextEvent(this);
 
@@ -121,7 +114,6 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     }
     @Override
     public void onSuccess(JsonObject result) {
-        mEventDetail.setText(result.toString());
         mMicrosoftEvent = result;
 
         //get event values from map and populate screen

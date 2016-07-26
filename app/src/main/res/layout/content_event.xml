@@ -12,25 +12,7 @@
     tools:context=".EventActivity"
     tools:showIn="@layout/activity_event">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Calendar item"
-        android:id="@+id/textView"
-        android:layout_above="@+id/queryTextView"
-        android:layout_toEndOf="@+id/statusTextView"
-        android:layout_marginStart="26dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/queryTextView"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="23dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,7 +30,8 @@
         android:text="subject"
         android:id="@+id/SubjectText"
         android:layout_alignTop="@+id/subjectTextView"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_toRightOf="@+id/subjectTextView"
+        android:layout_marginLeft="120sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -84,7 +67,7 @@
         android:text="123"
         android:id="@+id/ReservationTextView2"
         android:layout_alignBottom="@+id/ReservationTextView"
-        android:layout_alignStart="@+id/DetailTextView" />
+        android:layout_alignStart="@+id/SubjectText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,7 +85,7 @@
         android:text="confirmed"
         android:id="@+id/statusTextView2"
         android:layout_alignTop="@+id/statusTextView"
-        android:layout_alignStart="@+id/ReservationTextView2" />
+        android:layout_alignStart="@+id/SubjectText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -120,7 +103,7 @@
         android:text="8/1/2016"
         android:id="@+id/startDateTextView2"
         android:layout_below="@+id/statusTextView2"
-        android:layout_alignStart="@+id/statusTextView2" />
+        android:layout_alignStart="@+id/SubjectText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -138,7 +121,7 @@
         android:text="Seattle"
         android:id="@+id/LocationTextView2"
         android:layout_alignTop="@+id/locationTextView"
-        android:layout_alignStart="@+id/startDateTextView2" />
+        android:layout_alignStart="@+id/SubjectText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -156,7 +139,7 @@
         android:text="123 Easy street"
         android:id="@+id/streetTextView"
         android:layout_below="@+id/LocationTextView2"
-        android:layout_alignStart="@+id/LocationTextView2" />
+        android:layout_alignStart="@+id/SubjectText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -165,7 +148,7 @@
         android:text="Seattle"
         android:id="@+id/cityTextView"
         android:layout_below="@+id/streetTextView"
-        android:layout_alignStart="@+id/streetTextView" />
+        android:layout_alignStart="@+id/SubjectText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -174,7 +157,8 @@
         android:text="WA"
         android:id="@+id/stateTextView"
         android:layout_below="@+id/streetTextView"
-        android:layout_toEndOf="@+id/SubjectText" />
+        android:layout_toEndOf="@+id/cityTextView"
+        android:layout_marginLeft="20sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -183,6 +167,6 @@
         android:text="98123"
         android:id="@+id/postalCodeTextView"
         android:layout_below="@+id/cityTextView"
-        android:layout_alignStart="@+id/cityTextView" />
+        android:layout_alignStart="@+id/SubjectText" />
 
 </RelativeLayout>
