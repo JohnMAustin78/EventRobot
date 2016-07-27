@@ -87,10 +87,21 @@ public class EventManager implements IEventProvider {
         try {
 
 
-            mEventValues.put(EventConstants.EVENT_RESERVATION_NUMBER,microsoftEvent.get("id").toString());
-            mEventValues.put(EventConstants.EVENT_RESERVATION_STATUS,"Confirmed");
-            mEventValues.put(EventConstants.EVENT_SUBJECT,microsoftEvent.get("subject").toString());
-            mEventValues.put(EventConstants.EVENT_DETAIL,microsoftEvent.get("bodyPreview").toString());
+            mEventValues.put(
+                    EventConstants.EVENT_RESERVATION_NUMBER
+                    ,microsoftEvent.get("id").toString()
+                            .replace("\"",""));
+            mEventValues.put(
+                    EventConstants.EVENT_RESERVATION_STATUS
+                    ,"Confirmed");
+            mEventValues.put(
+                    EventConstants.EVENT_SUBJECT
+                    ,microsoftEvent.get("subject").toString()
+                            .replace("\"",""));
+            mEventValues.put(
+                    EventConstants.EVENT_DETAIL
+                    ,microsoftEvent.get("bodyPreview").toString()
+                            .replace("\"",""));
 
             Object thing = microsoftEvent.get("organizer");
             if (thing.getClass().equals(JsonObject.class)) {
@@ -99,12 +110,11 @@ public class EventManager implements IEventProvider {
                         .getAsJsonObject("emailAddress")
                         .getAsJsonPrimitive("name")
                         .toString();
-                // .getAsString();
+                organizerName = organizerName.replace("\"","");
             }
 
             mEventValues.put(EventConstants.EVENT_UNDER_NAME,organizerName);
 
-            //the pattern does not match the pattern from O365, 2digit year vs. 4
             DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS");
             try {
             if (thing.getClass().equals(JsonObject.class)) {
@@ -115,7 +125,9 @@ public class EventManager implements IEventProvider {
             }
 
                 DateTime dt = formatter.parseDateTime(startDate);
-                mEventValues.put(EventConstants.EVENT_START_DATE,dt.toLocalDateTime().toString("dd/MM/yyyy"));
+                mEventValues.put(
+                        EventConstants.EVENT_START_DATE
+                        ,dt.toLocalDateTime().toString("dd/MM/yyyy"));
 
 
             } catch (IllegalArgumentException e){
@@ -130,26 +142,37 @@ public class EventManager implements IEventProvider {
                 locationName = location
                         .getAsJsonPrimitive("displayName")
                         .getAsString();
-                mEventValues.put(EventConstants.EVENT_LOCATION_NAME,locationName);
+                mEventValues.put(
+                        EventConstants.EVENT_LOCATION_NAME
+                        ,locationName);
 
 
                 JsonObject physicalAddress = location.getAsJsonObject("address");
                 locationAddressStreet = physicalAddress
                         .getAsJsonPrimitive("street")
                         .getAsString();
-                mEventValues.put(EventConstants.EVENT_LOCATION_STREET,locationAddressStreet);
+                mEventValues.put(
+                        EventConstants.EVENT_LOCATION_STREET,
+                        locationAddressStreet);
 
                 locationAddressCity = physicalAddress
                         .getAsJsonPrimitive("city").getAsString();
-                mEventValues.put(EventConstants.EVENT_LOCATION_CITY,locationAddressCity);
+
+                mEventValues.put(
+                        EventConstants.EVENT_LOCATION_CITY,
+                        locationAddressCity);
 
                 locationAddressState = physicalAddress
                         .getAsJsonPrimitive("state").getAsString();
-                mEventValues.put(EventConstants.EVENT_LOCATION_STATE,locationAddressState);
+                mEventValues.put(
+                        EventConstants.EVENT_LOCATION_STATE
+                        ,locationAddressState);
 
                 locationAddressPostalCode = physicalAddress
                         .getAsJsonPrimitive("postalCode").getAsString();
-                mEventValues.put(EventConstants.EVENT_LOCATION_POSTAL_CODE,locationAddressPostalCode);
+                mEventValues.put(
+                        EventConstants.EVENT_LOCATION_POSTAL_CODE
+                        ,locationAddressPostalCode);
 
 
                 locationAddressCountry = physicalAddress
@@ -162,26 +185,32 @@ public class EventManager implements IEventProvider {
         return  "{\n" +
                 "  \"@context\": \"http://schema.org\",\n" +
                 "  \"@type\": \"EventReservation\",\n" +
-                "  \"reservationNumber\":\"E123456789\",\n" +
+                "  \"reservationNumber\":\""+microsoftEvent.get("id").toString().replace("\"","")+"\",\n" +
                 "  \"reservationStatus\": \"http://schema.org/Confirmed\",\n" +
                 "  \"underName\": {\n" +
                 "    \"@type\": \"Person\",\n" +
-                "    \"name\":"+organizerName+"\n" +
+                "    \"name\":\""+organizerName+"\"\n" +
                 "  },\n" +
+                "  \"modifiedTime\": \"2013-05-01T08:30:00-08:00\",\n" +
+                "  \"modifyReservationUrl\": \"https://outlook.office365.com/owa/?realm=MOD265542.onmicrosoft.com&exsvurl=1&ll-cc=1033&modurl=1&path=/calendar/view/Day\",\n"+
                 "  \"reservationFor\": {\n" +
-                "    \"@type\": \"Event\",\n" +
-                "    \"name\":"+ microsoftEvent.get("subject").getAsString()+",\n" +
-                "    \"startDate\":"+startDate+",\n" +
+                "    \"@type\": \"BusinessEvent\",\n" +
+                "    \"name\":\""+ microsoftEvent.get("subject").getAsString()+"\",\n" +
+                "    \"startDate\":\""+startDate+"\",\n" +
+                "    \"performer\": {\n" +
+                "       \"@type\": \"Person\",\n" +
+                "        \"name\":\"George Strait\"\n" +
+                "    },\n" +
                 "    \"location\": {\n" +
                 "      \"@type\": \"Place\",\n" +
-                "      \"name\":"+locationName+",\n" +
+                "      \"name\":\""+locationName+"\",\n" +
                 "      \"address\": {\n" +
                 "        \"@type\": \"PostalAddress\",\n" +
-                "        \"streetAddress\":" +locationAddressStreet+",\n" +
-                "        \"addressLocality\":"+locationAddressCity+",\n" +
-                "        \"addressRegion\":"+locationAddressState+",\n" +
-                "        \"postalCode\":" +locationAddressPostalCode+ ",\n" +
-                "        \"addressCountry\":"+locationAddressCountry+"\n" +
+                "        \"streetAddress\":\"" +locationAddressStreet+"\",\n" +
+                "        \"addressLocality\":\""+locationAddressCity+"\",\n" +
+                "        \"addressRegion\":\""+locationAddressState+"\",\n" +
+                "        \"postalCode\":\"" +locationAddressPostalCode+ "\",\n" +
+                "        \"addressCountry\":\""+locationAddressCountry+"\"\n" +
                 "      }\n" +
                 "    }\n" +
                 "  }\n" +
@@ -194,7 +223,7 @@ public class EventManager implements IEventProvider {
     }
 
     @Override
-    public HashMap<String, String> getEventValues() {
+    public HashMap<String, String> getDefaultEventValues() {
         if (mEventValues == null){
             mEventValues = new HashMap<String, String>();
             mEventValues.put(EventConstants.EVENT_RESERVATION_NUMBER,"123");

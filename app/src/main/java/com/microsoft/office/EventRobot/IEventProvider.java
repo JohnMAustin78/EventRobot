@@ -10,5 +10,5 @@ import java.util.HashMap;
 public interface IEventProvider {
     void getNextEvent(ICallback callback);
     String convertToAssistContent(JsonObject microsoftEvent);
-    HashMap<String,String> getEventValues();
+    HashMap<String,String> getDefaultEventValues();
 }
