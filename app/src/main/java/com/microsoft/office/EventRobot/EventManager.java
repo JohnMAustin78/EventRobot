@@ -204,7 +204,7 @@ public class EventManager implements IEventProvider {
             mEventValues.put(eventConstants.EVENT_SUBJECT,"Discuss vacation");
             mEventValues.put(eventConstants.EVENT_DETAIL,"Vacation plans for the group");
             mEventValues.put(eventConstants.EVENT_UNDER_NAME,"John Austin");
-            mEventValues.put(eventConstants.EVENT_START_DATE,"2014-01-01T00:00:00Z");
+            mEventValues.put(eventConstants.EVENT_START_DATE,"2014-01-01T00:00:00.0000000");
             mEventValues.put(eventConstants.EVENT_LOCATION_NAME,"Seattle Center");
             mEventValues.put(eventConstants.EVENT_LOCATION_STREET,"1234 Easy Street");
             mEventValues.put(eventConstants.EVENT_LOCATION_CITY,"Seattle");
