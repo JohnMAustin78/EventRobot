@@ -84,14 +84,13 @@ public class EventManager implements IEventProvider {
         String locationAddressPostalCode = null;
         String locationAddressCountry = null;
         String organizerName = null;
-        EventConstants eventConstants = new EventConstants();
         try {
 
 
-            mEventValues.put(eventConstants.EVENT_RESERVATION_NUMBER,microsoftEvent.get("id").toString());
-            mEventValues.put(eventConstants.EVENT_RESERVATION_STATUS,"Confirmed");
-            mEventValues.put(eventConstants.EVENT_SUBJECT,microsoftEvent.get("subject").toString());
-            mEventValues.put(eventConstants.EVENT_DETAIL,microsoftEvent.get("bodyPreview").toString());
+            mEventValues.put(EventConstants.EVENT_RESERVATION_NUMBER,microsoftEvent.get("id").toString());
+            mEventValues.put(EventConstants.EVENT_RESERVATION_STATUS,"Confirmed");
+            mEventValues.put(EventConstants.EVENT_SUBJECT,microsoftEvent.get("subject").toString());
+            mEventValues.put(EventConstants.EVENT_DETAIL,microsoftEvent.get("bodyPreview").toString());
 
             Object thing = microsoftEvent.get("organizer");
             if (thing.getClass().equals(JsonObject.class)) {
@@ -103,7 +102,7 @@ public class EventManager implements IEventProvider {
                 // .getAsString();
             }
 
-            mEventValues.put(eventConstants.EVENT_UNDER_NAME,organizerName);
+            mEventValues.put(EventConstants.EVENT_UNDER_NAME,organizerName);
 
             //the pattern does not match the pattern from O365, 2digit year vs. 4
             DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS");
@@ -116,7 +115,7 @@ public class EventManager implements IEventProvider {
             }
 
                 DateTime dt = formatter.parseDateTime(startDate);
-                mEventValues.put(eventConstants.EVENT_START_DATE,dt.toLocalDateTime().toString("dd/MM/yyyy"));
+                mEventValues.put(EventConstants.EVENT_START_DATE,dt.toLocalDateTime().toString("dd/MM/yyyy"));
 
 
             } catch (IllegalArgumentException e){
@@ -131,26 +130,26 @@ public class EventManager implements IEventProvider {
                 locationName = location
                         .getAsJsonPrimitive("displayName")
                         .getAsString();
-                mEventValues.put(eventConstants.EVENT_LOCATION_NAME,locationName);
+                mEventValues.put(EventConstants.EVENT_LOCATION_NAME,locationName);
 
 
                 JsonObject physicalAddress = location.getAsJsonObject("address");
                 locationAddressStreet = physicalAddress
                         .getAsJsonPrimitive("street")
                         .getAsString();
-                mEventValues.put(eventConstants.EVENT_LOCATION_STREET,locationAddressStreet);
+                mEventValues.put(EventConstants.EVENT_LOCATION_STREET,locationAddressStreet);
 
                 locationAddressCity = physicalAddress
                         .getAsJsonPrimitive("city").getAsString();
-                mEventValues.put(eventConstants.EVENT_LOCATION_CITY,locationAddressCity);
+                mEventValues.put(EventConstants.EVENT_LOCATION_CITY,locationAddressCity);
 
                 locationAddressState = physicalAddress
                         .getAsJsonPrimitive("state").getAsString();
-                mEventValues.put(eventConstants.EVENT_LOCATION_STATE,locationAddressState);
+                mEventValues.put(EventConstants.EVENT_LOCATION_STATE,locationAddressState);
 
                 locationAddressPostalCode = physicalAddress
                         .getAsJsonPrimitive("postalCode").getAsString();
-                mEventValues.put(eventConstants.EVENT_LOCATION_POSTAL_CODE,locationAddressPostalCode);
+                mEventValues.put(EventConstants.EVENT_LOCATION_POSTAL_CODE,locationAddressPostalCode);
 
 
                 locationAddressCountry = physicalAddress
@@ -196,20 +195,19 @@ public class EventManager implements IEventProvider {
 
     @Override
     public HashMap<String, String> getEventValues() {
-        EventConstants eventConstants = new EventConstants();
         if (mEventValues == null){
             mEventValues = new HashMap<String, String>();
-            mEventValues.put(eventConstants.EVENT_RESERVATION_NUMBER,"123");
-            mEventValues.put(eventConstants.EVENT_RESERVATION_STATUS,"Confirmed");
-            mEventValues.put(eventConstants.EVENT_SUBJECT,"Discuss vacation");
-            mEventValues.put(eventConstants.EVENT_DETAIL,"Vacation plans for the group");
-            mEventValues.put(eventConstants.EVENT_UNDER_NAME,"John Austin");
-            mEventValues.put(eventConstants.EVENT_START_DATE,"2014-01-01T00:00:00.0000000");
-            mEventValues.put(eventConstants.EVENT_LOCATION_NAME,"Seattle Center");
-            mEventValues.put(eventConstants.EVENT_LOCATION_STREET,"1234 Easy Street");
-            mEventValues.put(eventConstants.EVENT_LOCATION_CITY,"Seattle");
-            mEventValues.put(eventConstants.EVENT_LOCATION_STATE,"Wa");
-            mEventValues.put(eventConstants.EVENT_LOCATION_POSTAL_CODE,"98433");
+            mEventValues.put(EventConstants.EVENT_RESERVATION_NUMBER,"123");
+            mEventValues.put(EventConstants.EVENT_RESERVATION_STATUS,"Confirmed");
+            mEventValues.put(EventConstants.EVENT_SUBJECT,"Discuss vacation");
+            mEventValues.put(EventConstants.EVENT_DETAIL,"Vacation plans for the group");
+            mEventValues.put(EventConstants.EVENT_UNDER_NAME,"John Austin");
+            mEventValues.put(EventConstants.EVENT_START_DATE,"2014-01-01T00:00:00.0000000");
+            mEventValues.put(EventConstants.EVENT_LOCATION_NAME,"Seattle Center");
+            mEventValues.put(EventConstants.EVENT_LOCATION_STREET,"1234 Easy Street");
+            mEventValues.put(EventConstants.EVENT_LOCATION_CITY,"Seattle");
+            mEventValues.put(EventConstants.EVENT_LOCATION_STATE,"Wa");
+            mEventValues.put(EventConstants.EVENT_LOCATION_POSTAL_CODE,"98433");
         }
         return mEventValues;
     }

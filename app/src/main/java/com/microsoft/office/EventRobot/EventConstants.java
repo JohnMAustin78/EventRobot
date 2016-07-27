@@ -3,7 +3,7 @@ package com.microsoft.office.EventRobot;
 /**
  * Created by johnau on 7/26/2016.
  */
-public final class EventConstants {
+public  final class EventConstants {
     public EventConstants() {}
     public static final String EVENT_RESERVATION_NUMBER = "reservationNumber";
     public static final String EVENT_RESERVATION_STATUS = "reservationStatus";

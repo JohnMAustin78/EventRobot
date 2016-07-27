@@ -68,7 +68,6 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     public static final String ARG_GIVEN_NAME = "givenName";
     public static final String ARG_DISPLAY_ID = "displayableId";
 
-    private EventConstants mEventConstants = new EventConstants();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,45 +123,45 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         mEventName.setText(
                 eventProvider
                         .getEventValues()
-                        .get(mEventConstants.EVENT_SUBJECT));
+                        .get(EventConstants.EVENT_SUBJECT));
 
         mMeetingDetail.setText(
                 eventProvider
                 .getEventValues()
-                .get(mEventConstants.EVENT_DETAIL)
+                .get(EventConstants.EVENT_DETAIL)
         );
         mLocationCity.setText(
                 eventProvider
                         .getEventValues()
-                        .get(mEventConstants.EVENT_LOCATION_CITY));
+                        .get(EventConstants.EVENT_LOCATION_CITY));
         mLocationName.setText(
                 eventProvider
                         .getEventValues()
-                        .get(mEventConstants.EVENT_LOCATION_NAME));
+                        .get(EventConstants.EVENT_LOCATION_NAME));
         mLocationStreet.setText(
                 eventProvider
                         .getEventValues()
-                        .get(mEventConstants.EVENT_LOCATION_STREET));
+                        .get(EventConstants.EVENT_LOCATION_STREET));
         mLocationState.setText(
                 eventProvider
                         .getEventValues()
-                        .get(mEventConstants.EVENT_LOCATION_STATE));
+                        .get(EventConstants.EVENT_LOCATION_STATE));
         mPostalCode.setText(
                 eventProvider
                         .getEventValues()
-                        .get(mEventConstants.EVENT_LOCATION_POSTAL_CODE));
+                        .get(EventConstants.EVENT_LOCATION_POSTAL_CODE));
         mReservationStatus.setText(
                 eventProvider
                         .getEventValues()
-                        .get(mEventConstants.EVENT_RESERVATION_STATUS));
+                        .get(EventConstants.EVENT_RESERVATION_STATUS));
         mReservationText.setText(
                 eventProvider
                         .getEventValues()
-                        .get(mEventConstants.EVENT_RESERVATION_NUMBER));
+                        .get(EventConstants.EVENT_RESERVATION_NUMBER));
         mStartDate.setText(
                 eventProvider
                         .getEventValues()
-                        .get(mEventConstants.EVENT_START_DATE));
+                        .get(EventConstants.EVENT_START_DATE));
 
     }
 
