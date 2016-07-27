@@ -104,7 +104,10 @@ public class EventManager implements IEventProvider {
             }
 
             mEventValues.put(eventConstants.EVENT_UNDER_NAME,organizerName);
-            thing = microsoftEvent.get("start");
+
+            //the pattern does not match the pattern from O365, 2digit year vs. 4
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS");
+            try {
             if (thing.getClass().equals(JsonObject.class)) {
                 startDate = microsoftEvent
                         .getAsJsonObject("start")
@@ -112,15 +115,14 @@ public class EventManager implements IEventProvider {
                         .getAsString();
             }
 
-            //the pattern does not match the pattern from O365, 2digit year vs. 4
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
-            try {
                 DateTime dt = formatter.parseDateTime(startDate);
                 mEventValues.put(eventConstants.EVENT_START_DATE,dt.toLocalDateTime().toString("dd/MM/yyyy"));
 
 
-            } catch (Exception e){
+            } catch (IllegalArgumentException e){
                 Log.e("EventManger","Exception in EventManager " + e.getMessage());
+            } catch (Exception ex) {
+                Log.e("EventManager","Exception in EventManager " + ex.getMessage());
             }
 
             thing = microsoftEvent.get("location");
