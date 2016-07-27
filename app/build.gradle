@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.microsoft.office.calendarbotclient"
+        applicationId "com.microsoft.office.EventRobot"
         minSdkVersion 23
         targetSdkVersion 24
         versionCode 1
@@ -24,7 +24,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
+    compile 'joda-time:joda-time:2.9.4'
+    compile 'com.android.volley:volley:1.0.0'
 
     // Azure Active Directory Library
     compile 'com.microsoft.aad:adal:1.1.16'
+
+    compile 'com.jakewharton:butterknife:6.1.0'
 }
