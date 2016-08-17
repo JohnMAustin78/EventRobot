@@ -1,4 +1,4 @@
-# EventRobot
+# GraphBot
 Android client for an Microsoft Graph "bot" that gets events from your O365 and Microsoft calendars
 
 ## Start EventActivity event using ADB
@@ -8,5 +8,4 @@ this point.
 
 To mock the Google Now voice prompt, execute the following syntax in the terminal: 
 
-adb shell am start -a com.google.android.gms.actions.SEARCH_ACTION -e query MyNextMeeting com.microsoft.office.Even
-tRobot
+adb shell am start -a com.google.android.gms.actions.SEARCH_ACTION -e query MyNextMeeting com.microsoft.office.GraphBot

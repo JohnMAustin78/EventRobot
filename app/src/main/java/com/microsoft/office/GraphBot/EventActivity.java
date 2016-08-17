@@ -1,4 +1,4 @@
-package com.microsoft.office.EventRobot;
+package com.microsoft.office.GraphBot;
 
 import android.app.SearchManager;
 import android.app.assist.AssistContent;
@@ -19,16 +19,16 @@ import org.json.JSONObject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import static com.microsoft.office.EventRobot.R.id.DetailTextView;
-import static com.microsoft.office.EventRobot.R.id.LocationTextView2;
-import static com.microsoft.office.EventRobot.R.id.ReservationTextView2;
-import static com.microsoft.office.EventRobot.R.id.SubjectText;
-import static com.microsoft.office.EventRobot.R.id.cityTextView;
-import static com.microsoft.office.EventRobot.R.id.postalCodeTextView;
-import static com.microsoft.office.EventRobot.R.id.startDateTextView2;
-import static com.microsoft.office.EventRobot.R.id.stateTextView;
-import static com.microsoft.office.EventRobot.R.id.statusTextView2;
-import static com.microsoft.office.EventRobot.R.id.streetTextView;
+import static com.microsoft.office.GraphBot.R.id.DetailTextView;
+import static com.microsoft.office.GraphBot.R.id.LocationTextView2;
+import static com.microsoft.office.GraphBot.R.id.ReservationTextView2;
+import static com.microsoft.office.GraphBot.R.id.SubjectText;
+import static com.microsoft.office.GraphBot.R.id.cityTextView;
+import static com.microsoft.office.GraphBot.R.id.postalCodeTextView;
+import static com.microsoft.office.GraphBot.R.id.startDateTextView2;
+import static com.microsoft.office.GraphBot.R.id.stateTextView;
+import static com.microsoft.office.GraphBot.R.id.statusTextView2;
+import static com.microsoft.office.GraphBot.R.id.streetTextView;
 
 public class EventActivity extends AppCompatActivity implements ICallback {
     IEventProvider eventProvider;
@@ -169,9 +169,9 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     @Override
     public void onFailure(Exception e) {
         if (e.getMessage() == null) {
-            Log.e("EventRobot", "failure to return query value");
+            Log.e("GraphBot", "failure to return query value");
         } else {
-            Log.e("EventRobot", e.getMessage());
+            Log.e("GraphBot", e.getMessage());
         }
     }
 

@@ -1,4 +1,4 @@
-package com.microsoft.office.EventRobot;
+package com.microsoft.office.GraphBot;
 
 /**
  * Created by johnau on 7/26/2016.

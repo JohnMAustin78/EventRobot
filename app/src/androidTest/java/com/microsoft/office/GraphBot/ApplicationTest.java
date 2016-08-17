@@ -1,4 +1,4 @@
-package com.microsoft.office.EventRobot;
+package com.microsoft.office.GraphBot;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

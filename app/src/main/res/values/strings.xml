@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EventRobot</string>
+    <string name="app_name">GraphBot</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_voice">Get Event By Voice</string>
     <string name="connect_button_text">Connect to Office 365</string>
@@ -18,5 +18,5 @@
     <string name="connect_text_error">\nSorry, can\'t connect to Office 365.\nHint: Check logcat for details.</string>
     <string name="discover_text_error">\nSorry, can\'t find the mail service.\nHint: Check logcat for details.</string>
     <string name="sendmail_text_error">\nSorry, can\'t send the email.\nHint: Check logcat for details.</string>
-    <string name="microsoft_event_robot">Microsoft Event Robot</string>
+    <string name="microsoft_event_robot">Microsoft Graph Bot</string>
 </resources>

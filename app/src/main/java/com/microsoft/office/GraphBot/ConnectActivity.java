@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
  * See LICENSE in the project root for license information.
  */
-package com.microsoft.office.EventRobot;
+package com.microsoft.office.GraphBot;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.microsoft.office.EventRobot">
+    package="com.microsoft.office.GraphBot">
     <uses-permission android:name="android.permission.READ_CALENDAR"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -10,11 +10,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".application.EventRobot">
+        android:name=".application.GraphBot">
 
 
         <activity
-            android:name="com.microsoft.office.EventRobot.ConnectActivity"
+            android:name="com.microsoft.office.GraphBot.ConnectActivity"
             android:label="@string/app_name"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
@@ -25,13 +25,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EventActivity"
+            android:name="com.microsoft.office.GraphBot.EventActivity"
             android:label="@string/title_activity_voice"
-            android:parentActivityName="com.microsoft.office.EventRobot.ConnectActivity"
+            android:parentActivityName="com.microsoft.office.GraphBot.ConnectActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.microsoft.office.EventRobot.ConnectActivity" />
+                android:value="com.microsoft.office.GraphBot.ConnectActivity" />
             <intent-filter>
                 <action android:name="android.action.ACTION_VIEW" />
                 <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
