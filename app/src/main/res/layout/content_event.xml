@@ -30,9 +30,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Organizer"
+        android:id="@+id/organizerTextView"
+        android:layout_below="@+id/subjectTextView"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Detail"
         android:id="@+id/DetailTextView2"
-        android:layout_below="@+id/subjectTextView"
+        android:layout_below="@+id/organizerTextView"
         android:layout_alignParentStart="true" />
     <TextView
         android:layout_width="wrap_content"
@@ -91,6 +99,16 @@
         android:layout_alignTop="@+id/subjectTextView"
         android:maxLines="1" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/organizerValueTextView"
+        android:layout_alignTop="@+id/organizerTextView"
+        android:lines="1"
+        android:linksClickable="false"
+        android:maxLines="1" />
 
     <TextView
         android:layout_width="wrap_content"

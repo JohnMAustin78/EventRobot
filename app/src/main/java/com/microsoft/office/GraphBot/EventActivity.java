@@ -24,6 +24,7 @@ import static com.microsoft.office.GraphBot.R.id.LocationTextView2;
 import static com.microsoft.office.GraphBot.R.id.ReservationTextView2;
 import static com.microsoft.office.GraphBot.R.id.SubjectText;
 import static com.microsoft.office.GraphBot.R.id.cityTextView;
+import static com.microsoft.office.GraphBot.R.id.organizerValueTextView;
 import static com.microsoft.office.GraphBot.R.id.postalCodeTextView;
 import static com.microsoft.office.GraphBot.R.id.startDateTextView2;
 import static com.microsoft.office.GraphBot.R.id.stateTextView;
@@ -37,6 +38,8 @@ public class EventActivity extends AppCompatActivity implements ICallback {
     @InjectView(SubjectText)
     TextView mEventName;
 
+    @InjectView(organizerValueTextView)
+    TextView mOrganizer;
 
     @InjectView(DetailTextView)
     TextView mMeetingDetail;
@@ -126,6 +129,11 @@ public class EventActivity extends AppCompatActivity implements ICallback {
                         .getDefaultEventValues()
                         .get(EventConstants.EVENT_SUBJECT));
 
+        mOrganizer.setText(
+                eventProvider
+                        .getDefaultEventValues()
+                        .get(EventConstants.EVENT_UNDER_NAME));
+
         mMeetingDetail.setText(
                 eventProvider
                         .getDefaultEventValues()
@@ -175,57 +183,57 @@ public class EventActivity extends AppCompatActivity implements ICallback {
         }
     }
 
-    @Override
-    public void onProvideAssistContent(AssistContent assistContent) {
-        super.onProvideAssistContent(assistContent);
-
-        String structuredJson = null;
-        try {
-            String attendeeJson = new JSONObject()
-                    .put("@context", "http://schema.org")
-                    .put("@type", "person")
-                    .put("familyName", "Loo")
-                    .put("givenName", "Ricardo").toString();
-            String postalAddressJson = new JSONObject()
-                    .put("@context", "http://schema.org")
-                    .put("@type", "postalAddress")
-                    .put("postalCode", "98466")
-                    .put("streetAddress", "9726 Vision court")
-                    .put("addressLocality", "Garden Grove")
-                    .put("addressRegion", "CA").toString();
-
-            structuredJson = new JSONObject()
-                    .put("@context", "http://schema.org")
-                    .put("@type", "event")
-                    .put("attendee", attendeeJson)
-                    .put("location", postalAddressJson)
-                    .put("startDate", "2017-03-06T19:30:00-08:00")
-                    .toString();
-
-
-            Log.i("Json", structuredJson);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (mMicrosoftEvent != null) {
-            structuredJson = eventProvider.convertToAssistContent(mMicrosoftEvent);
-        }
-        assistContent.setStructuredData(structuredJson);
-
-    }
-
-    @Override
-    public void onProvideAssistData(android.os.Bundle bundle) {
-        super.onProvideAssistData(bundle);
-        if (mMicrosoftEvent != null) {
-            bundle.putString(
-                    "Event data",
-                    eventProvider
-                            .convertToAssistContent(mMicrosoftEvent));
-        }
-
-
-    }
+//    @Override
+//    public void onProvideAssistContent(AssistContent assistContent) {
+//        super.onProvideAssistContent(assistContent);
+//
+//        String structuredJson = null;
+//        try {
+//            String attendeeJson = new JSONObject()
+//                    .put("@context", "http://schema.org")
+//                    .put("@type", "person")
+//                    .put("familyName", "Makovac")
+//                    .put("givenName", "Zrinka").toString();
+//            String postalAddressJson = new JSONObject()
+//                    .put("@context", "http://schema.org")
+//                    .put("@type", "postalAddress")
+//                    .put("postalCode", "98466")
+//                    .put("streetAddress", "9726 Vision court")
+//                    .put("addressLocality", "Garden Grove")
+//                    .put("addressRegion", "CA").toString();
+//
+//            structuredJson = new JSONObject()
+//                    .put("@context", "http://schema.org")
+//                    .put("@type", "event")
+//                    .put("attendee", attendeeJson)
+//                    .put("location", postalAddressJson)
+//                    .put("startDate", "2017-03-06T19:30:00-08:00")
+//                    .toString();
+//
+//
+//            Log.i("Json", structuredJson);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (mMicrosoftEvent != null) {
+//            structuredJson = eventProvider.convertToAssistContent(mMicrosoftEvent);
+//        }
+//        assistContent.setStructuredData(structuredJson);
+//
+//    }
+//
+//    @Override
+//    public void onProvideAssistData(android.os.Bundle bundle) {
+//        super.onProvideAssistData(bundle);
+//        if (mMicrosoftEvent != null) {
+//            bundle.putString(
+//                    "Event data",
+//                    eventProvider
+//                            .convertToAssistContent(mMicrosoftEvent));
+//        }
+//
+//
+//    }
 
 }
